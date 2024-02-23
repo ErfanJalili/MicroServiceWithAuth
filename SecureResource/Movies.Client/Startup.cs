@@ -43,7 +43,7 @@ namespace Movies.Client
            
             services.AddHttpClient("MovieAPIClient", client =>
             {
-                client.BaseAddress = new Uri("https://localhost:5010/"); // API GATEWAY URL
+                client.BaseAddress = new Uri("https://localhost:44351/"); // API GATEWAY URL
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
             }).AddHttpMessageHandler<AuthenticationDelegatingHandler>();
@@ -52,7 +52,7 @@ namespace Movies.Client
             // 2 create an HttpClient used for accessing the IDP
             services.AddHttpClient("IDPClient", client =>
             {
-                client.BaseAddress = new Uri("https://localhost:5005/");
+                client.BaseAddress = new Uri("https://localhost:44360/");
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
             });
@@ -78,7 +78,7 @@ namespace Movies.Client
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
                 {                    
-                    options.Authority = "https://localhost:5005";
+                    options.Authority = "https://localhost:44360";
 
                     options.ClientId = "movies_mvc_client";
                     options.ClientSecret = "secret";

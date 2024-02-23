@@ -32,11 +32,11 @@ namespace IdentityServer
                        AllowRememberConsent = false,
                        RedirectUris = new List<string>()
                        {
-                           "https://localhost:5002/signin-oidc"
+                           "https://localhost:44347/signin-oidc"
                        },
                        PostLogoutRedirectUris = new List<string>()
                        {
-                           "https://localhost:5002/signout-callback-oidc"
+                           "https://localhost:44347/signout-callback-oidc"
                        },
                        ClientSecrets = new List<Secret>
                        {

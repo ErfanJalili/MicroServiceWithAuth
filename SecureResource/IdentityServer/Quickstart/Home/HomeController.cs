@@ -43,7 +43,7 @@ namespace IdentityServerHost.Quickstart.UI
         /// Shows the error page
         /// </summary>
         public async Task<IActionResult> Error(string errorId)
-        {
+            {
             var vm = new ErrorViewModel();
 
             // retrieve error details from identityserver

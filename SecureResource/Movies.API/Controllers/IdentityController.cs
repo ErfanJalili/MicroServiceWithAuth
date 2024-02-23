@@ -18,5 +18,12 @@ namespace Movies.API.Controllers
         {
             return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
         }
+        [AllowAnonymous]
+        [HttpGet("SayHello")]
+        public string Hello()
+        {
+            return "Hello";
+        }
+
     }
 }

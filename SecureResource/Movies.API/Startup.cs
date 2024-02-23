@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Movies.API.Data;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.Swagger;
+using Microsoft.Extensions.Options;
 
 namespace Movies.API
 {
@@ -30,13 +33,28 @@ namespace Movies.API
         {
             services.AddControllers();
 
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "API V1" });
+                c.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "Please enter into field the word 'Bearer' following by space and JWT",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey
+                    });
+                
+    
+            });
+
             services.AddDbContext<MoviesContext>(options =>
                     options.UseInMemoryDatabase("Movies"));
 
             services.AddAuthentication("Bearer")
                     .AddJwtBearer("Bearer", options =>
                     {
-                        options.Authority = "https://localhost:5005";
+                        options.Authority = "https://localhost:44360";
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
                             ValidateAudience = false
@@ -56,13 +74,16 @@ namespace Movies.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+         
 
             app.UseEndpoints(endpoints =>
             {

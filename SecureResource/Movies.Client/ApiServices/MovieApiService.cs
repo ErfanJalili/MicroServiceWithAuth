@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Movies.Client.ApiServices
 {
@@ -35,16 +37,22 @@ namespace Movies.Client.ApiServices
             var request = new HttpRequestMessage(
                 HttpMethod.Get,
                 "/movies");
-
+            
             var response = await httpClient.SendAsync(
                 request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
 
-            response.EnsureSuccessStatusCode();
+         
+                response.EnsureSuccessStatusCode();
+         
+            
 
-            var content = await response.Content.ReadAsStringAsync();
-            var movieList = JsonConvert.DeserializeObject<List<Movie>>(content);
-            return movieList;
-
+            if (response.IsSuccessStatusCode) 
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var movieList = JsonConvert.DeserializeObject<List<Movie>>(content);
+                return movieList;
+            }
+            return null;
             ////////////////////////// //////////////////////// ////////////////////////
             //// WAY 2 :
 

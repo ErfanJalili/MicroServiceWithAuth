@@ -16,6 +16,7 @@ using Movies.Client.Models;
 namespace Movies.Client.Controllers
 {
     [Authorize]
+    //[AllowAnonymous]
     public class MoviesController : Controller
     {        
         private readonly IMovieApiService _movieApiService;
@@ -29,7 +30,10 @@ namespace Movies.Client.Controllers
         public async Task<IActionResult> Index()
         {
             await LogTokenAndClaims();
-            return View(await _movieApiService.GetMovies());
+
+            var res =  await _movieApiService.GetMovies();
+
+            return View(res);
         }
         public async Task LogTokenAndClaims()
         {
