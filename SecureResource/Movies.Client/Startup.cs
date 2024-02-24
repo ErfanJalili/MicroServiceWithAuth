@@ -79,16 +79,18 @@ namespace Movies.Client
                 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
                 {                    
                     options.Authority = "https://localhost:44360";
-
+                                        
                     options.ClientId = "movies_mvc_client";
                     options.ClientSecret = "secret";
                     options.ResponseType = "code id_token";
 
-                    //options.Scope.Add("openid");
-                    //options.Scope.Add("profile");
+
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
                     options.Scope.Add("address");
                     options.Scope.Add("email");
                     options.Scope.Add("roles");
+                    options.Scope.Add("role");
 
                     options.ClaimActions.DeleteClaim("sid");
                     options.ClaimActions.DeleteClaim("idp");
@@ -97,7 +99,7 @@ namespace Movies.Client
                     options.ClaimActions.MapUniqueJsonKey("role", "role");
 
                     options.Scope.Add("movieAPI");
-
+                    
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
 
