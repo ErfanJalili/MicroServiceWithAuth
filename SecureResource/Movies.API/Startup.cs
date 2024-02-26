@@ -21,6 +21,7 @@ namespace Movies.API
 {
     public class Startup
     {
+        //start
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,7 +35,8 @@ namespace Movies.API
             services.AddControllers();
 
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "API V1" });
                 c.AddSecurityDefinition("Bearer",
                     new OpenApiSecurityScheme
@@ -44,8 +46,8 @@ namespace Movies.API
                         Name = "Authorization",
                         Type = SecuritySchemeType.ApiKey
                     });
-                
-    
+
+
             });
 
             services.AddDbContext<MoviesContext>(options =>
@@ -60,7 +62,7 @@ namespace Movies.API
                             ValidateAudience = false
                         };
                     });
-            
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("client_id", "movieClient", "movies_mvc_client"));
@@ -83,7 +85,7 @@ namespace Movies.API
             app.UseAuthentication();
             app.UseAuthorization();
 
-         
+
 
             app.UseEndpoints(endpoints =>
             {
